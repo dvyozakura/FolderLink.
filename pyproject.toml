@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "folderlink"
+version = "0.1.0"
+description = "離れた2台の Windows PC のフォルダを Syncthing で双方向同期するデスクトップアプリ"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = [
+    "PySide6>=6.6",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pyinstaller>=6.6",
+]
+
+[project.gui-scripts]
+folderlink = "folderlink.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+folderlink = ["resources/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not integration'"
+markers = [
+    "integration: 実際の Syncthing を _sandbox/ 内で起動する結合テスト（./Tools/run_integration.sh で実行）",
+]
